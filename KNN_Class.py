@@ -33,10 +33,17 @@ class K_NN:
             k_distances = sorted_distances[:self.K]
             # Get the predicted classification
             predict = [self.y_train[i[1]] for i in k_distances]
-            # Get the most frequent predicted element from predict
-            result = max(set(predict), key = predict.count)
-            # Append the result to the predictions list
-            predictions.append(result)
+            # If the data is regression
+            if predict[0] is str:
+                # take the mean of k nearest points
+                result = sum(predict) / len(predict)
+                # Append the result to the predictions list
+                predictions.append(result)
+            else:
+                # Get the most frequent predicted element from predict
+                result = max(set(predict), key = predict.count)
+                # Append the result to the predictions list
+                predictions.append(result)
         # return the prediction
         return predictions
 
